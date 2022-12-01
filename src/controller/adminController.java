@@ -2,6 +2,8 @@ package controller;
 
 
 import dao.Note;
+import dao.User;
+import query.execute.UserTableExecute;
 import utils.JdbcUtils;
 
 import javax.servlet.RequestDispatcher;
@@ -23,7 +25,10 @@ public class adminController extends HttpServlet {
         req.setCharacterEncoding("utf-8");
         Integer userId = Integer.valueOf(req.getParameter("userId"));
         if(userId == 4) {
-
+            List<User> allUsers = UserTableExecute.getAllUsers();
+            req.setAttribute("userList", allUsers);
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("userList.jsp");
+            requestDispatcher.forward(req, resp);
         } else {
             resp.sendRedirect("index.jsp");
         }

@@ -18,16 +18,18 @@
 </head>
 <body>
 <c:forEach items="${userList}" var="user" varStatus="vs">
-    <tr>
-        <td align="center">${user.noteId}</td>
-        <td align="center">${note.userId}</td>
-        <td align="center">${note.shared}</td>
-        <td align="center">${note.content}</td>
-        <a href="noteController.yc?noteId=${note.noteId}&shared=${note.shared}&userId=${note.userId}&userIdC=${userId}">
-            是否隐藏 </a>
-    </tr>
+        <form>
+            账号：<td style="width: 20%"><input type="text" name = "username" value="${user.username}"></td>
+            密码：<td style="width: 20%"><input type="text" name = "password" value="${user.password}"></td>
+            <td style="width: 20%"><input type="button" value="删除" onclick="del(${user.userId})"></td>
+            <td style="width: 20%"><input type="submit" value="更新"></td>
+        </form>
     <br/>
 </c:forEach>
-<a href="adminController.ac?userId=${userId}"> 管理员后台 </a>
 </body>
 </html>
+<script>
+    function del(x) {
+        window.location.href="delete.jsp?id=" + x;
+    }
+</script>

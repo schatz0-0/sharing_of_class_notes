@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -25,7 +25,7 @@
                 <td><input type="text" name="username"/></td>
             </tr>
             <tr>
-                <td>密   码：</td>
+                <td>密 码：</td>
                 <td><input type="password" name="password"/></td>
             </tr>
             <tr>

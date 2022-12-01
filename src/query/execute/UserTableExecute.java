@@ -19,4 +19,17 @@ public class UserTableExecute extends TableExecute<User> {
         return execute.selectOne(query);
     }
 
+    public static List<User> getAllUsers() {
+        LambdaQuery<User> query = new LambdaQuery<>();
+        query.select(User::getUserId, User::getUsername, User::getPassword);
+        UserTableExecute execute = new UserTableExecute();
+        return execute.selectList(query);
+    }
+
+    public static Integer deleteUserById(Integer id) {
+        LambdaQuery<User> query = new LambdaQuery<>();
+        query.eq(User::getUserId, id);
+        UserTableExecute execute = new UserTableExecute();
+        return execute.delete(query);
+    }
 }
