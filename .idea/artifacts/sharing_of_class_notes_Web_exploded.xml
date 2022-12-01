@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="sharing_of_class_notes:Web exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/sharing_of_class_notes_Web_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="sharing_of_class_notes/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="sharing_of_class_notes" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
