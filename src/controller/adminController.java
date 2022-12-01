@@ -21,6 +21,11 @@ public class adminController extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("utf-8");
+        Integer userId = Integer.valueOf(req.getParameter("userId"));
+        if(userId == 4) {
 
+        } else {
+            resp.sendRedirect("index.jsp");
+        }
     }
 }

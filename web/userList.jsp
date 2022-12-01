@@ -1,6 +1,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="dao.Note" %><%--
+<%@ page import="dao.Note" %>
+<%@ page import="dao.User" %><%--
   Created by IntelliJ IDEA.
   User: lin
   Date: 2022/11/26
@@ -9,17 +10,16 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    ArrayList<Note> notesList = (ArrayList<Note>) request.getAttribute("notesList");
-    Integer userId = (Integer) request.getAttribute("userId");
+    ArrayList<User> userList = (ArrayList<User>) request.getAttribute("userList");
 %>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
-<c:forEach items="${notesList}" var="note" varStatus="vs">
+<c:forEach items="${userList}" var="user" varStatus="vs">
     <tr>
-        <td align="center">${note.noteId}</td>
+        <td align="center">${user.noteId}</td>
         <td align="center">${note.userId}</td>
         <td align="center">${note.shared}</td>
         <td align="center">${note.content}</td>
