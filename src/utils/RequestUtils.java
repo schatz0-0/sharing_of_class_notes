@@ -11,7 +11,14 @@ public class RequestUtils {
             T t = clazz.newInstance();
             for (Field field : fields) {
                 field.setAccessible(true);
-                field.set(t, request.getParameter(field.getName()));
+                String parameter = request.getParameter(field.getName());
+                if (parameter != null && Integer.class.equals(field.getType())) {
+                    field.set(t, Integer.valueOf(parameter));
+                } else if (parameter != null && Boolean.class.equals(field.getType())) {
+                    field.set(t, Boolean.valueOf(parameter));
+                } else {
+                    field.set(t, parameter);
+                }
                 field.setAccessible(false);
             }
             return t;
@@ -20,7 +27,6 @@ public class RequestUtils {
         }
         return null;
     }
-
 
 
 }

@@ -3,6 +3,7 @@ package controller;
 import dao.Note;
 import query.execute.NodeTableExecute;
 import utils.RequestUtils;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,13 +16,18 @@ public class noteController extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Note note = RequestUtils.getParamToBean(req, Note.class);
+        Integer userIdC = Integer.valueOf(req.getParameter("userIdC"));
         NodeTableExecute.getNoteList(note);
-        req.setAttribute("userId", note.getUserId());
+        req.setAttribute("userId", userIdC);
         List<Note> notesList = null;
-        if ("4".equals(note.getUserId())) {
+        if (userIdC == 4) {
+            System.out.println(!note.getShared() + "!!!!!!!" + note.getNoteId());
+            NodeTableExecute.updateNoteAll(!note.getShared(), note.getNoteId());
             notesList = NodeTableExecute.getNoteListAll();
         } else {
-            notesList = NodeTableExecute.getNoteListByUserId(note);
+            System.out.println(!note.getShared() + "???????");
+            NodeTableExecute.updateNoteById(userIdC, note.getNoteId(), !note.getShared());
+            notesList = NodeTableExecute.getNoteListByAny(userIdC);
         }
         req.setAttribute("notesList", notesList);
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("notes.jsp");

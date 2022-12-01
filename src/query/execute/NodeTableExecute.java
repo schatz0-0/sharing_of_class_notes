@@ -48,4 +48,19 @@ public class NodeTableExecute extends TableExecute<Note> {
         return notes;
     }
 
+    public static Integer updateNoteById(Integer userId, Integer noteId, Boolean flag) {
+        LambdaQuery<Note> query = new LambdaQuery<>();
+        query.select(Note::getNoteId, Note::getContent, Note::getShared, Note::getUserId).eq(Note::getUserId, userId).and()
+                .eq(Note::getNoteId, noteId).set(Note::getShared, flag);
+        NodeTableExecute execute = new NodeTableExecute();
+        return execute.update(query);
+    }
+
+    public static Integer updateNoteAll(Boolean flag, Integer noteId) {
+        LambdaQuery<Note> query = new LambdaQuery<>();
+        query.select(Note::getNoteId, Note::getContent, Note::getShared, Note::getUserId).eq(Note::getNoteId, noteId).set(Note::getShared, flag);
+        NodeTableExecute execute = new NodeTableExecute();
+        return execute.update(query);
+    }
+
 }

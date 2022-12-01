@@ -23,7 +23,7 @@
             <td align = "center">${note.userId}</td>
             <td align = "center">${note.shared}</td>
             <td align = "center">${note.content}</td>
-            <a href="noteController.yc?id=${note.noteId}&shared=${note.shared}&userId=${userId}&userIdC=${note.userId}"> 是否隐藏 </a>
+            <a href="noteController.yc?noteId=${note.noteId}&shared=${note.shared}&userId=${note.userId}&userIdC=${userId}"> 是否隐藏 </a>
         </tr>
         <br/>
     </c:forEach>
