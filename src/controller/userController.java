@@ -36,8 +36,7 @@ public class userController extends HttpServlet {
             resp.sendRedirect("index.jsp");
         } else {
             List<Note> notesList = null;
-            System.out.println(user.getUserId());
-            if ("4".equals(user.getUserId())) {
+            if (user.getUserId() == 4) {
                 notesList = NodeTableExecute.getNoteListAll();
             } else {
                 notesList = NodeTableExecute.getNoteListByAny(user.getUserId());
