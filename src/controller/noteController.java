@@ -21,11 +21,9 @@ public class noteController extends HttpServlet {
         req.setAttribute("userId", userIdC);
         List<Note> notesList = null;
         if (userIdC == 4) {
-            System.out.println(!note.getShared() + "!!!!!!!" + note.getNoteId());
             NodeTableExecute.updateNoteAll(!note.getShared(), note.getNoteId());
             notesList = NodeTableExecute.getNoteListAll();
         } else {
-            System.out.println(!note.getShared() + "???????");
             NodeTableExecute.updateNoteById(userIdC, note.getNoteId(), !note.getShared());
             notesList = NodeTableExecute.getNoteListByAny(userIdC);
         }

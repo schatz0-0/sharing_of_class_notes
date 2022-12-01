@@ -39,16 +39,21 @@ public class TableExecute<T> {
         System.out.println(sql);
         List<QueryCondition> conditionList = query.getConditionList();
         List<String> columnList = query.getColumnList();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
-            Connection connection = JdbcUtils.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            connection = JdbcUtils.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
             setCondition(preparedStatement, conditionList);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 resultList.add(getResultBean(resultSet, columnList));
             }
         } catch (Throwable throwable) {
             throwable.printStackTrace();
+        } finally {
+            JdbcUtils.close(resultSet, preparedStatement, connection);
         }
         return resultList;
     }
@@ -62,13 +67,17 @@ public class TableExecute<T> {
         System.out.println(sql);
         List<QueryCondition> UpdateList = query.getSqlUpdateList();
         List<QueryCondition> conditionList = query.getConditionList();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
-            Connection connection = JdbcUtils.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            connection = JdbcUtils.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
             setUpdate(preparedStatement, conditionList, UpdateList);
             return preparedStatement.executeUpdate();
         } catch (Throwable throwable) {
             throwable.printStackTrace();
+        } finally {
+            JdbcUtils.close(preparedStatement, connection);
         }
         return 0;
     }
@@ -79,13 +88,17 @@ public class TableExecute<T> {
         String sql = String.join(" ", sqlSelect, sqlCondition);
         System.out.println(sql);
         List<QueryCondition> conditionList = query.getConditionList();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
-            Connection connection = JdbcUtils.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            connection = JdbcUtils.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
             setCondition(preparedStatement, conditionList);
             return preparedStatement.executeUpdate();
         } catch (Throwable throwable) {
             throwable.printStackTrace();
+        } finally {
+            JdbcUtils.close(preparedStatement, connection);
         }
         return 0;
     }
@@ -105,9 +118,10 @@ public class TableExecute<T> {
         String params = fieldList.stream().map(f -> "?").collect(Collectors.joining(","));
         String sql = String.join(" ", sqlSelect, "(", fields, ")", "values", "(", params, ")");
         System.out.println(sql);
-        PreparedStatement preparedStatement;
+        PreparedStatement preparedStatement = null;
+        Connection connection = null;
         try {
-            Connection connection = JdbcUtils.getConnection();
+            connection = JdbcUtils.getConnection();
             preparedStatement = connection.prepareStatement(sql);
             for (T t : collection) {
                 setValue(preparedStatement, t, fieldMap);
@@ -116,6 +130,8 @@ public class TableExecute<T> {
             return preparedStatement.executeBatch().length;
         } catch (Throwable throwable) {
             throwable.printStackTrace();
+        } finally {
+            JdbcUtils.close(preparedStatement, connection);
         }
         return 0;
     }

@@ -12,7 +12,9 @@ public class RequestUtils {
             for (Field field : fields) {
                 field.setAccessible(true);
                 String parameter = request.getParameter(field.getName());
-                if (parameter != null && Integer.class.equals(field.getType())) {
+                if (parameter != null && parameter.equals("")) {
+
+                } else if (parameter != null && Integer.class.equals(field.getType())) {
                     field.set(t, Integer.valueOf(parameter));
                 } else if (parameter != null && Boolean.class.equals(field.getType())) {
                     field.set(t, Boolean.valueOf(parameter));
