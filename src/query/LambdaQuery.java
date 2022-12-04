@@ -143,7 +143,7 @@ public class LambdaQuery<T> implements Query<T> {
         if (updateList.isEmpty()) {
             return "";
         }
-        return "set " + this.updateList.stream().map(QueryCondition::getSql).collect(Collectors.joining(" "));
+        return "set " + this.updateList.stream().map(QueryCondition::getSql).collect(Collectors.joining(","));
     }
 
     @Override

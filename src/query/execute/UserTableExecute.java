@@ -32,4 +32,11 @@ public class UserTableExecute extends TableExecute<User> {
         UserTableExecute execute = new UserTableExecute();
         return execute.delete(query);
     }
+
+    public static Integer updateUser(User user) {
+        LambdaQuery<User> query = new LambdaQuery<>();
+        query.eq(User::getUserId, user.getUserId()).set(User::getUsername, user.getUsername()).set(User::getPassword, user.getPassword());
+        UserTableExecute execute = new UserTableExecute();
+        return execute.update(query);
+    }
 }

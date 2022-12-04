@@ -18,18 +18,21 @@
 </head>
 <body>
 <c:forEach items="${userList}" var="user" varStatus="vs">
-        <form>
-            账号：<td style="width: 20%"><input type="text" name = "username" value="${user.username}"></td>
-            密码：<td style="width: 20%"><input type="text" name = "password" value="${user.password}"></td>
-            <td style="width: 20%"><input type="button" value="删除" onclick="del(${user.userId})"></td>
-            <td style="width: 20%"><input type="submit" value="更新"></td>
-        </form>
+    <form action="updateUser.jsp">
+        <input type="text" hidden="hidden" name="userId" value="${user.userId}">
+        账号：
+        <td style="width: 20%"><input type="text" name="username" value="${user.username}"></td>
+        密码：
+        <td style="width: 20%"><input type="text" name="password" value="${user.password}"></td>
+        <td style="width: 20%"><input type="button" value="删除" onclick="del(${user.userId})"></td>
+        <td style="width: 20%"><input type="submit" value="更新"></td>
+    </form>
     <br/>
 </c:forEach>
 </body>
 </html>
 <script>
     function del(x) {
-        window.location.href="delete.jsp?id=" + x;
+        window.location.href = "deleteUser.jsp?id=" + x;
     }
 </script>

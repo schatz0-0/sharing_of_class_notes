@@ -26,6 +26,7 @@ public class userController extends HttpServlet {
         this.doPost(req, resp);
     }
 
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         //1.设置编码

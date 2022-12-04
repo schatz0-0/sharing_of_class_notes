@@ -1,6 +1,7 @@
 package query.execute;
 
 import dao.Note;
+import dao.User;
 import query.LambdaQuery;
 import query.TableExecute;
 
@@ -61,6 +62,13 @@ public class NodeTableExecute extends TableExecute<Note> {
         query.select(Note::getNoteId, Note::getContent, Note::getShared, Note::getUserId).eq(Note::getNoteId, noteId).set(Note::getShared, flag);
         NodeTableExecute execute = new NodeTableExecute();
         return execute.update(query);
+    }
+
+    public static Integer deleteUserById(Integer id) {
+        LambdaQuery<Note> query = new LambdaQuery<>();
+        query.eq(Note::getNoteId, id);
+        NodeTableExecute execute = new NodeTableExecute();
+        return execute.delete(query);
     }
 
 }
