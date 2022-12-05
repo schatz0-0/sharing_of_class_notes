@@ -1,7 +1,11 @@
 package query;
 
 import dao.Note;
-import query.condition.*;
+import query.condition.AndCondition;
+import query.condition.EqualCondition;
+import query.condition.NotEqualCondition;
+import query.condition.OrCondition;
+import query.condition.QueryCondition;
 import utils.FiledUtils;
 
 import java.lang.invoke.SerializedLambda;
@@ -15,24 +19,24 @@ public class LambdaQuery<T> implements Query<T> {
     /**
      * 大写字母正则.
      */
-
-
+    
+    
     /**
      * 查询字段.
      */
     private final List<String> columnList = new ArrayList<>();
-
+    
     /**
      * 更新字段
      */
     private final List<QueryCondition> updateList = new ArrayList<>();
-
+    
     /**
      * 条件集合.
      */
     private final List<QueryCondition> conditionList = new ArrayList<>();
-
-
+    
+    
     /**
      * 设置查询字段.
      *
@@ -44,7 +48,7 @@ public class LambdaQuery<T> implements Query<T> {
         this.columnList.addAll(Arrays.stream(columns).map(this::columnToString).collect(Collectors.toList()));
         return this;
     }
-
+    
     /**
      * 相等.
      *
@@ -57,7 +61,7 @@ public class LambdaQuery<T> implements Query<T> {
         conditionList.add(condition);
         return this;
     }
-
+    
     /**
      * 相等.
      *
@@ -70,7 +74,7 @@ public class LambdaQuery<T> implements Query<T> {
         conditionList.add(condition);
         return this;
     }
-
+    
     /**
      * 或者.
      *
@@ -81,7 +85,7 @@ public class LambdaQuery<T> implements Query<T> {
         conditionList.add(condition);
         return this;
     }
-
+    
     /**
      * 并且.
      *
@@ -92,7 +96,7 @@ public class LambdaQuery<T> implements Query<T> {
         conditionList.add(condition);
         return this;
     }
-
+    
     /**
      * set.
      *
@@ -103,8 +107,8 @@ public class LambdaQuery<T> implements Query<T> {
         updateList.add(condition);
         return this;
     }
-
-
+    
+    
     /**
      * 列转数据库字段.
      *
@@ -123,13 +127,13 @@ public class LambdaQuery<T> implements Query<T> {
             return null;
         }
     }
-
-
+    
+    
     @Override
     public String getSqlSelect() {
         return String.join(",", this.columnList);
     }
-
+    
     @Override
     public String getSqlCondition() {
         if (conditionList.isEmpty()) {
@@ -137,7 +141,7 @@ public class LambdaQuery<T> implements Query<T> {
         }
         return "where " + this.conditionList.stream().map(QueryCondition::getSql).collect(Collectors.joining(" "));
     }
-
+    
     @Override
     public String getSqlUpdate() {
         if (updateList.isEmpty()) {
@@ -145,22 +149,22 @@ public class LambdaQuery<T> implements Query<T> {
         }
         return "set " + this.updateList.stream().map(QueryCondition::getSql).collect(Collectors.joining(","));
     }
-
+    
     @Override
     public List<QueryCondition> getConditionList() {
         return this.conditionList;
     }
-
+    
     @Override
     public List<String> getColumnList() {
         return columnList;
     }
-
+    
     @Override
     public List<QueryCondition> getSqlUpdateList() {
         return updateList;
     }
-
+    
     public static void main(String[] args) {
         LambdaQuery<Note> query = new LambdaQuery<>();
         query.select(Note::getNoteId, Note::getContent, Note::getShared, Note::getUserId).eq(Note::getNoteId, 1);

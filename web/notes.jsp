@@ -26,8 +26,8 @@
         <td style="width: 20%">${note.shared}</td>
         日志内容：
         <td style="width: 20%"><input type="text" name="password" value="${note.content}"></td>
-<%--        <td style="width: 20%"><input type="button" value="删除" onclick="del(${note.noteId})"></td>--%>
-<%--        <td style="width: 20%"><input type="submit" value="更新"></td>--%>
+            <%--        <td style="width: 20%"><input type="button" value="删除" onclick="del(${note.noteId})"></td>--%>
+            <%--        <td style="width: 20%"><input type="submit" value="更新"></td>--%>
         <a href="noteController.yc?noteId=${note.noteId}&shared=${note.shared}&userId=${note.userId}&userIdC=${userId}">
             是否隐藏 </a>
     </form>

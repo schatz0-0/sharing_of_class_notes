@@ -4,9 +4,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FiledUtils {
-
+    
     private final static Pattern UPPER_LETTER = Pattern.compile("[A-Z]");
-
+    
     /**
      * 驼峰转下划线.
      *
@@ -26,6 +26,6 @@ public class FiledUtils {
         matcher.appendTail(newStr);
         return newStr.toString();
     }
-
-
+    
+    
 }

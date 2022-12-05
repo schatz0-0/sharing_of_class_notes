@@ -11,18 +11,26 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class TableExecute<T> {
-
+    
     public TableExecute() {
     }
-
+    
+    
     private String getTableName() {
         return FiledUtils.toUnderline(getClazz().getSimpleName());
     }
-
+    
     public T selectOne(Query<T> query) {
         List<T> resultList = selectList(query);
         if (resultList != null && resultList.size() > 0) {
@@ -30,7 +38,7 @@ public class TableExecute<T> {
         }
         return null;
     }
-
+    
     public List<T> selectList(Query<T> query) {
         List<T> resultList = new ArrayList<>();
         String sqlSelect = "select " + query.getSqlSelect() + " from " + getTableName();
@@ -57,7 +65,7 @@ public class TableExecute<T> {
         }
         return resultList;
     }
-
+    
     public Integer update(Query<T> query) {
         String sqlSelect = "update " + getTableName();
         String sqlUpdate = query.getSqlUpdate();
@@ -81,7 +89,7 @@ public class TableExecute<T> {
         }
         return 0;
     }
-
+    
     public Integer delete(Query<T> query) {
         String sqlSelect = "delete from " + getTableName();
         String sqlCondition = query.getSqlCondition();
@@ -102,17 +110,17 @@ public class TableExecute<T> {
         }
         return 0;
     }
-
+    
     public boolean save(T t) {
         return saveBatch(Collections.singletonList(t)) == 1;
     }
-
+    
     public Integer saveBatch(Collection<T> collection) {
         String sqlSelect = "insert into " + getTableName();
         Class<T> clazz = getClazz();
-        Map<String, Field> fieldMap = Arrays.stream(clazz.getDeclaredFields())
-                .collect(Collectors.toMap(field -> FiledUtils.toUnderline(field.getName()), field -> field,
-                        (last, curr) -> curr, LinkedHashMap::new));
+        Map<String, Field> fieldMap = Arrays.stream(clazz.getDeclaredFields()).collect(
+                Collectors.toMap(field -> FiledUtils.toUnderline(field.getName()), field -> field, (last, curr) -> curr,
+                        LinkedHashMap::new));
         Set<String> fieldList = fieldMap.keySet();
         String fields = String.join(",", fieldList);
         String params = fieldList.stream().map(f -> "?").collect(Collectors.joining(","));
@@ -135,7 +143,7 @@ public class TableExecute<T> {
         }
         return 0;
     }
-
+    
     private void setValue(PreparedStatement preparedStatement, T t, Map<String, Field> fieldMap) throws Exception {
         Set<String> fieldList = fieldMap.keySet();
         int i = 0;
@@ -147,9 +155,10 @@ public class TableExecute<T> {
             currentField.setAccessible(false);
         }
     }
-
-
-    private T getResultBean(ResultSet resultSet, List<String> columnList) throws InstantiationException, IllegalAccessException, SQLException {
+    
+    
+    private T getResultBean(ResultSet resultSet, List<String> columnList)
+            throws InstantiationException, IllegalAccessException, SQLException {
         Class<T> clazz = getClazz();
         Map<String, Field> fieldMap = Arrays.stream(clazz.getDeclaredFields())
                 .collect(Collectors.toMap(field -> FiledUtils.toUnderline(field.getName()), field -> field));
@@ -163,13 +172,15 @@ public class TableExecute<T> {
         }
         return t;
     }
-
-    private void setUpdate(PreparedStatement preparedStatement, List<QueryCondition> conditionList, List<QueryCondition> updateList) throws SQLException {
+    
+    private void setUpdate(PreparedStatement preparedStatement, List<QueryCondition> conditionList,
+            List<QueryCondition> updateList) throws SQLException {
         for (int i = 0; i < updateList.size(); i++) {
             QueryCondition condition = updateList.get(i);
             preparedStatement.setObject(i + 1, condition.getValue());
         }
-        List<QueryCondition> paramList = conditionList.stream().filter(QueryCondition::isParam).collect(Collectors.toList());
+        List<QueryCondition> paramList = conditionList.stream().filter(QueryCondition::isParam)
+                .collect(Collectors.toList());
         for (int i = 0; i < paramList.size(); i++) {
             QueryCondition condition = paramList.get(i);
             if (condition.isParam()) {
@@ -177,9 +188,11 @@ public class TableExecute<T> {
             }
         }
     }
-
-    private void setCondition(PreparedStatement preparedStatement, List<QueryCondition> conditionList) throws SQLException {
-        List<QueryCondition> paramList = conditionList.stream().filter(QueryCondition::isParam).collect(Collectors.toList());
+    
+    private void setCondition(PreparedStatement preparedStatement, List<QueryCondition> conditionList)
+            throws SQLException {
+        List<QueryCondition> paramList = conditionList.stream().filter(QueryCondition::isParam)
+                .collect(Collectors.toList());
         for (int i = 0; i < paramList.size(); i++) {
             QueryCondition condition = paramList.get(i);
             if (condition.isParam()) {
@@ -187,12 +200,12 @@ public class TableExecute<T> {
             }
         }
     }
-
+    
     private Class<T> getClazz() {
         Type genericSuperclass = this.getClass().getGenericSuperclass();
         ParameterizedType parameterizedType = (ParameterizedType) genericSuperclass;
         Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
         return (Class<T>) actualTypeArguments[0];
     }
-
+    
 }

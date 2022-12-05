@@ -2,25 +2,36 @@ package utils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.List;
 
+/**
+ * @author lin
+ */
 public class RequestUtils {
-
+    
+    private final static List<Class<?>> WRAPPER_CLASS = Arrays.asList(Integer.class, Boolean.class);
+    
     public static <T> T getParamToBean(HttpServletRequest request, Class<T> clazz) {
         try {
+            request.setCharacterEncoding("utf-8");
             Field[] fields = clazz.getDeclaredFields();
             T t = clazz.newInstance();
             for (Field field : fields) {
                 field.setAccessible(true);
-                String parameter = request.getParameter(field.getName());
-                if (parameter != null && parameter.equals("")) {
-
-                } else if (parameter != null && Integer.class.equals(field.getType())) {
-                    field.set(t, Integer.valueOf(parameter));
-                } else if (parameter != null && Boolean.class.equals(field.getType())) {
-                    field.set(t, Boolean.valueOf(parameter));
-                } else {
-                    field.set(t, parameter);
+                String value = request.getParameter(field.getName());
+                if (value == null || "".equals(value)) {
+                    continue;
                 }
+                if (Integer.class.equals(field.getType())) {
+                    field.set(t, Integer.valueOf(value));
+                    continue;
+                }
+                if (Boolean.class.equals(field.getType())) {
+                    field.set(t, Boolean.valueOf(value));
+                    continue;
+                }
+                field.set(t, value);
                 field.setAccessible(false);
             }
             return t;
@@ -29,6 +40,6 @@ public class RequestUtils {
         }
         return null;
     }
-
-
+    
+    
 }
