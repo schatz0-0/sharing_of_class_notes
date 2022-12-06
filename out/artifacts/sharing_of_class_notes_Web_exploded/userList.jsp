@@ -10,7 +10,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    ArrayList<User> userList = (ArrayList<User>) request.getAttribute("userList");
+    ArrayList<User> userList = (ArrayList<User>) session.getAttribute("userList");
 %>
 <html>
 <head>
@@ -29,6 +29,13 @@
     </form>
     <br/>
 </c:forEach>
+<%="==============添加账号==================="
+%>
+<form action="insertUser.jsp" method="post">
+    账号：<input type="text" name="username">
+    密码：<input type="text" name="password">
+    <input type="submit" value="增加用戶"><br>
+</form>
 </body>
 </html>
 <script>

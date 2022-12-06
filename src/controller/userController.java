@@ -34,6 +34,7 @@ public class userController extends HttpServlet {
         req.setCharacterEncoding("utf-8");
         HttpSession session = req.getSession();
         User user = RequestUtils.getParamToBean(req, User.class);
+        System.out.println(user.getUsername());
         user = UserTableExecute.getUser(user);
         if (user == null) {
             resp.sendRedirect("index.jsp");

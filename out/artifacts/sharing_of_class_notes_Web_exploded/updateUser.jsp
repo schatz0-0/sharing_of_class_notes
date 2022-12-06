@@ -12,10 +12,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     request.setCharacterEncoding("utf-8");
-    User user = SessionUtils.getParamToBean(request, User.class);
+    User user = RequestUtils.getParamToBean(request, User.class);
     UserTableExecute.updateUser(user);
     List<User> allUsers = UserTableExecute.getAllUsers();
-    request.setAttribute("userList", allUsers);
-    RequestDispatcher requestDispatcher = request.getRequestDispatcher("notes.jsp");
-    requestDispatcher.forward(request, response);
+    session.setAttribute("userList", allUsers);
+    response.sendRedirect("userList.jsp");
 %>
