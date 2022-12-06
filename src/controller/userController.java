@@ -50,6 +50,5 @@ public class userController extends HttpServlet {
             session.setAttribute("userIdC", user.getUserId());
             resp.sendRedirect("notes.jsp");
         }
-        
     }
 }

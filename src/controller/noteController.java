@@ -29,7 +29,6 @@ public class noteController extends HttpServlet {
             NodeTableExecute.updateNoteById(userIdC, note.getNoteId(), !note.getShared());
             notesList = NodeTableExecute.getNoteListByAny(userIdC);
         }
-        System.out.println(notesList.size() + "=================");
         session.setAttribute("notesList", notesList);
         resp.sendRedirect("notes.jsp");
     }
