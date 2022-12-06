@@ -1,7 +1,8 @@
 <%@ page import="dao.Note" %>
 <%@ page import="utils.RequestUtils" %>
 <%@ page import="query.execute.NodeTableExecute" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="utils.SessionUtils" %><%--
   Created by IntelliJ IDEA.
   User: lin
   Date: 2022/12/1
@@ -10,8 +11,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    Note note = RequestUtils.getParamToBean(request, Note.class);
-    Integer userIdC = Integer.valueOf(request.getParameter("userIdC"));
+    Note note = SessionUtils.getParamToBean(request, Note.class);
+    Integer userIdC = Integer.valueOf(session.getAttribute("userIdC") + "");
+    System.out.println(note + "????????????????");
     NodeTableExecute.getNoteList(note);
     request.setAttribute("userId", userIdC);
     List<Note> notesList = null;

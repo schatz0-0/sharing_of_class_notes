@@ -60,6 +60,12 @@ public class NodeTableExecute extends TableExecute<Note> {
         return getInstance().update(query);
     }
     
+    public static Integer updateNoteContent(String content, Integer noteId) {
+        LambdaQuery<Note> query = new LambdaQuery<>();
+        query.eq(Note::getNoteId, noteId).set(Note::getContent, content);
+        return getInstance().update(query);
+    }
+    
     public static Integer deleteUserById(Integer id) {
         LambdaQuery<Note> query = new LambdaQuery<>();
         query.eq(Note::getNoteId, id);

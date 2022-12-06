@@ -46,6 +46,7 @@ public class userController extends HttpServlet {
             }
             session.setAttribute("notesList", notesList);
             session.setAttribute("userId", user.getUserId());
+            session.setAttribute("userIdC", user.getUserId());
             resp.sendRedirect("notes.jsp");
         }
 
