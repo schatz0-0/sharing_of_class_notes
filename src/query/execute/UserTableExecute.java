@@ -1,6 +1,5 @@
 package query.execute;
 
-import dao.Note;
 import dao.User;
 import query.LambdaQuery;
 import query.TableExecute;
@@ -14,6 +13,7 @@ public class UserTableExecute extends TableExecute<User> {
     public static UserTableExecute getInstance() {
         return BeanUtils.getSingleTon(UserTableExecute.class, obj -> new UserTableExecute());
     }
+    
     public static User getUser(User user) {
         LambdaQuery<User> query = new LambdaQuery<>();
         query.select(User::getUserId, User::getUsername, User::getPassword).eq(User::getUsername, user.getUsername())

@@ -36,6 +36,12 @@ public class LambdaQuery<T> implements Query<T> {
      */
     private final List<QueryCondition> conditionList = new ArrayList<>();
     
+    public static void main(String[] args) {
+        LambdaQuery<Note> query = new LambdaQuery<>();
+        query.select(Note::getNoteId, Note::getContent, Note::getShared, Note::getUserId).eq(Note::getNoteId, 1);
+        System.out.println(query.getSqlSelect());
+        System.out.println(query.getSqlCondition());
+    }
     
     /**
      * 设置查询字段.
@@ -108,7 +114,6 @@ public class LambdaQuery<T> implements Query<T> {
         return this;
     }
     
-    
     /**
      * 列转数据库字段.
      *
@@ -127,7 +132,6 @@ public class LambdaQuery<T> implements Query<T> {
             return null;
         }
     }
-    
     
     @Override
     public String getSqlSelect() {
@@ -163,12 +167,5 @@ public class LambdaQuery<T> implements Query<T> {
     @Override
     public List<QueryCondition> getSqlUpdateList() {
         return updateList;
-    }
-    
-    public static void main(String[] args) {
-        LambdaQuery<Note> query = new LambdaQuery<>();
-        query.select(Note::getNoteId, Note::getContent, Note::getShared, Note::getUserId).eq(Note::getNoteId, 1);
-        System.out.println(query.getSqlSelect());
-        System.out.println(query.getSqlCondition());
     }
 }

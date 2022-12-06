@@ -6,7 +6,6 @@ import query.execute.NodeTableExecute;
 import query.execute.UserTableExecute;
 import utils.RequestUtils;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,18 +18,19 @@ import java.util.List;
 
 @WebServlet("/index.do")
 public class userController extends HttpServlet {
+    
     private static final long serialVersionUID = 1L;
-
+    
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         // TODO Auto-generated method stub
         this.doPost(req, resp);
     }
-
-
+    
+    
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        //1.设置编码
+        // 1.设置编码
         req.setCharacterEncoding("utf-8");
         HttpSession session = req.getSession();
         User user = RequestUtils.getParamToBean(req, User.class);
@@ -50,6 +50,6 @@ public class userController extends HttpServlet {
             session.setAttribute("userIdC", user.getUserId());
             resp.sendRedirect("notes.jsp");
         }
-
+        
     }
 }

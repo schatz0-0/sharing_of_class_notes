@@ -11,10 +11,10 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-  ArrayList<Note> noteArrayList = (ArrayList<Note>)session.getAttribute("notesList");
-  Note note = RequestUtils.getParamToBean(request, Note.class);
-  NodeTableExecute.insertNoteOne(note);
-  noteArrayList.add(note);
-  session.setAttribute("notesList", noteArrayList);
-  response.sendRedirect("notes.jsp");
+    ArrayList<Note> noteArrayList = (ArrayList<Note>) session.getAttribute("notesList");
+    Note note = RequestUtils.getParamToBean(request, Note.class);
+    NodeTableExecute.insertNoteOne(note);
+    noteArrayList.add(note);
+    session.setAttribute("notesList", noteArrayList);
+    response.sendRedirect("notes.jsp");
 %>

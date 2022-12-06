@@ -14,7 +14,9 @@
     NodeTableExecute.updateNoteContent(content, noteId);
     ArrayList<Note> notesList = (ArrayList<Note>) session.getAttribute("notesList");
     for (Note note : notesList) {
-        if (note.getNoteId() == noteId) note.setContent(content);
+        if (note.getNoteId() == noteId) {
+            note.setContent(content);
+        }
     }
     response.sendRedirect("notes.jsp");
 %>
