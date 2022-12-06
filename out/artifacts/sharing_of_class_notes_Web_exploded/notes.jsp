@@ -30,6 +30,8 @@
             <%--        <td style="width: 20%"><input type="submit" value="更新"></td>--%>
         <a href="noteController.yc?noteId=${note.noteId}&shared=${note.shared}&userId=${note.userId}&userIdC=${userId}">
             是否隐藏 </a>
+        <a href="deleteNote.jsp?noteId=${note.noteId}">
+            删除日记 </a>
         <input type="submit" value="修改内容"><br>
     </form>
     <br/>
