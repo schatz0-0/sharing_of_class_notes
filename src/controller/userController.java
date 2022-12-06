@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class userController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         //1.设置编码
         req.setCharacterEncoding("utf-8");
+        HttpSession session = req.getSession();
         User user = RequestUtils.getParamToBean(req, User.class);
         user = UserTableExecute.getUser(user);
         if (user == null) {
@@ -42,10 +44,9 @@ public class userController extends HttpServlet {
             } else {
                 notesList = NodeTableExecute.getNoteListByAny(user.getUserId());
             }
-            req.setAttribute("notesList", notesList);
-            req.setAttribute("userId", user.getUserId());
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("notes.jsp");
-            requestDispatcher.forward(req, resp);
+            session.setAttribute("notesList", notesList);
+            session.setAttribute("userId", user.getUserId());
+            resp.sendRedirect("notes.jsp");
         }
 
     }

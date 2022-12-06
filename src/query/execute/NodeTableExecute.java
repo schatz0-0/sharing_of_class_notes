@@ -66,4 +66,7 @@ public class NodeTableExecute extends TableExecute<Note> {
         return getInstance().delete(query);
     }
     
+    public static Boolean insertNoteOne(Note note) {
+        return getInstance().save(note);
+    }
 }

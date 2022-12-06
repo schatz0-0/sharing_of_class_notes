@@ -9,19 +9,19 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    ArrayList<Note> notesList = (ArrayList<Note>) request.getAttribute("notesList");
-    Integer userId = (Integer) request.getAttribute("userId");
+    ArrayList<Note> notesList = (ArrayList<Note>) session.getAttribute("notesList");
+    Integer userId = (Integer) session.getAttribute("userId");
 %>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
+
 <c:forEach items="${notesList}" var="note" varStatus="vs">
     <form action="noteList.jsp">
         <input type="text" hidden="hidden" name="userId" value="${note.noteId}">
-        用户id：
-        <td style="width: 20%"><input type="text" name="username" value="${note.userId}"></td>
+        用户id：${note.userId}
         是否分享：
         <td style="width: 20%">${note.shared}</td>
         日志内容：
@@ -33,6 +33,14 @@
     </form>
     <br/>
 </c:forEach>
+
+<form action="addNote.jsp" method="post">
+    <input type="text" hidden="hidden" name="userId" value="${userId}">
+    <textarea id="content" rows="10" cols="30" name="content"></textarea><br>
+    <input type="radio" name="shared" value="0" checked>不共享
+    <input type="radio" name="shared" value="1">共享<br>
+    <input type="submit" value="发布笔记"><br>
+</form>
 <a href="adminController.ac?userId=${userId}"> 管理员后台 </a>
 </body>
 </html>
