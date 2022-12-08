@@ -13,7 +13,6 @@
 <%
     Note note = SessionUtils.getParamToBean(request, Note.class);
     Integer userIdC = Integer.valueOf(session.getAttribute("userIdC") + "");
-    System.out.println(note + "????????????????");
     NodeTableExecute.getNoteList(note);
     request.setAttribute("userId", userIdC);
     List<Note> notesList = null;

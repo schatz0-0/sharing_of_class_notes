@@ -66,9 +66,13 @@ public class NodeTableExecute extends TableExecute<Note> {
         return getInstance().update(query);
     }
     
-    public static Integer deleteUserById(Integer id) {
+    public static Integer deleteUserById(Integer id, Integer userId) {
         LambdaQuery<Note> query = new LambdaQuery<>();
-        query.eq(Note::getNoteId, id);
+        if(userId == 4) {
+            query.eq(Note::getNoteId, id);
+        } else {
+            query.eq(Note::getNoteId, id).and().eq(Note::getUserId, userId);
+        }
         return getInstance().delete(query);
     }
     

@@ -13,13 +13,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     Integer noteId = Integer.valueOf(request.getParameter("noteId"));
-    UserTableExecute.deleteUserById(noteId);
-    ArrayList<Note> notesList = (ArrayList<Note>) session.getAttribute("notesList");
-    for (Note note : notesList) {
-        if (note.getNoteId() == noteId) {
-            notesList.remove(note);
-            break;
-        }
+    Integer userIdC = Integer.valueOf(request.getParameter("userIdC"));
+    Integer userId = Integer.valueOf(request.getParameter("userId"));
+    System.out.println(noteId);
+    NodeTableExecute.deleteUserById(noteId, userIdC);
+    List<Note> notesList = null;
+    if (userIdC == 4) {
+        notesList = NodeTableExecute.getNoteListAll();
+    } else {
+        notesList = NodeTableExecute.getNoteListByAny(userId);
     }
     session.setAttribute("notesList", notesList);
     response.sendRedirect("notes.jsp");
