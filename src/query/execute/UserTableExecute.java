@@ -18,21 +18,18 @@ public class UserTableExecute extends TableExecute<User> {
         LambdaQuery<User> query = new LambdaQuery<>();
         query.select(User::getUserId, User::getUsername, User::getPassword).eq(User::getUsername, user.getUsername())
                 .and().eq(User::getPassword, user.getPassword());
-        UserTableExecute execute = new UserTableExecute();
         return getInstance().selectOne(query);
     }
     
     public static List<User> getAllUsers() {
         LambdaQuery<User> query = new LambdaQuery<>();
         query.select(User::getUserId, User::getUsername, User::getPassword);
-        UserTableExecute execute = new UserTableExecute();
         return getInstance().selectList(query);
     }
     
     public static Integer deleteUserById(Integer id) {
         LambdaQuery<User> query = new LambdaQuery<>();
         query.eq(User::getUserId, id);
-        UserTableExecute execute = new UserTableExecute();
         return getInstance().delete(query);
     }
     
@@ -40,7 +37,6 @@ public class UserTableExecute extends TableExecute<User> {
         LambdaQuery<User> query = new LambdaQuery<>();
         query.eq(User::getUserId, user.getUserId()).set(User::getUsername, user.getUsername())
                 .set(User::getPassword, user.getPassword());
-        UserTableExecute execute = new UserTableExecute();
         return getInstance().update(query);
     }
     

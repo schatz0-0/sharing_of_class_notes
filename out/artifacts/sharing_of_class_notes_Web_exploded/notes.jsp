@@ -21,6 +21,8 @@
 <c:forEach items="${notesList}" var="note" varStatus="vs">
     <form action="updateNote.jsp">
         <input type="text" hidden="hidden" name="noteId" value="${note.noteId}">
+        <input type="text" hidden="hidden" name="userIdC" value="${userIdC}">
+        <input type="text" hidden="hidden" name="userId" value="${note.userId}">
         用户id：${note.userId}
         是否分享：
         <td style="width: 20%">${note.shared}</td>
@@ -28,9 +30,9 @@
         <td style="width: 20%"><input type="text" name="content" value="${note.content}"></td>
             <%--        <td style="width: 20%"><input type="button" value="删除" onclick="del(${note.noteId})"></td>--%>
             <%--        <td style="width: 20%"><input type="submit" value="更新"></td>--%>
-        <a href="noteController.yc?noteId=${note.noteId}&shared=${note.shared}&userId=${note.userId}&userIdC=${userId}">
+        <a href="noteController.yc?noteId=${note.noteId}&shared=${note.shared}&userId=${note.userId}&userIdC=${userIdC}">
             是否隐藏 </a>
-        <a href="deleteNote.jsp?noteId=${note.noteId}">
+        <a href="deleteNote.jsp?noteId=${note.noteId}&userIdC=${userId}&userId=${note.userId}">
             删除日记 </a>
         <input type="submit" value="修改内容"><br>
     </form>
